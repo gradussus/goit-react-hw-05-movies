@@ -1,11 +1,12 @@
 // import { getTrending } from 'components/API/getTrending';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { getTrending } from 'components/API/getTrending';
 
 const Home = () => {
   const [trending, setTranding] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     getTrending().then(data => setTranding(data));
@@ -17,7 +18,9 @@ const Home = () => {
       <ul>
         {trending.map(({ id, title }) => (
           <li key={id}>
-            <Link to={`movies/${id}`}>{title}</Link>
+            <Link to={`movies/${id}`} state={{ from: location }}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>

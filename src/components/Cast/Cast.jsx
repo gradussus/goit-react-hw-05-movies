@@ -25,7 +25,7 @@ const Cast = () => {
       {status === 'success' && (
         <ul>
           {cast.map(({ profile_path, name, character, id }) => (
-            <li>{name}</li>
+            <li key={id}>{name}</li>
           ))}
         </ul>
       )}

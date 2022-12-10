@@ -3,7 +3,7 @@ import { Loader } from 'components/Loader';
 import { Suspense, useEffect } from 'react';
 import { useState } from 'react';
 import { Poster, Title } from './MovieDetails.styled';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const { useParams } = require('react-router-dom');
 
@@ -11,6 +11,10 @@ const MovieDetails = () => {
   const { movieID } = useParams();
   const [currentMovie, setCurrentMovie] = useState();
   const [status, setStatus] = useState('idle');
+
+  const { state } = useLocation();
+
+  const from = state?.from ?? '/';
 
   useEffect(() => {
     try {
@@ -30,7 +34,9 @@ const MovieDetails = () => {
 
   return (
     <main>
+      <Link to={from}>Back</Link>
       {status === 'pending' && <Loader />}
+      {status === 'error' && <div>Sorry, something wrong</div>}
       {status === 'success' && (
         <>
           <Poster
