@@ -25,6 +25,7 @@ const Reviews = () => {
 
   return (
     <>
+      <hr></hr>
       {status === 'pending' && <Loader />}
       {status === 'noInfo' && <p>Sorry, no reviews, yet</p>}
       {status === 'success' && (

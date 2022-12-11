@@ -16,10 +16,10 @@ const Home = () => {
     <main>
       <h1>Trending Today</h1>
       <ul>
-        {trending.map(({ id, title }) => (
+        {trending.map(({ id, title, original_name }) => (
           <li key={id}>
             <Link to={`movies/${id}`} state={{ from: location }}>
-              {title}
+              {title || original_name}
             </Link>
           </li>
         ))}

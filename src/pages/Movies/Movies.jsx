@@ -1,6 +1,6 @@
 import { getByQuery } from 'components/API/getByQuery';
 import { Loader } from 'components/Loader';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -10,9 +10,19 @@ const Movies = () => {
   const [queryArr, setQueryArr] = useState([]);
   const [status, setStatus] = useState('idle');
 
-  const from = useLocation();
+  const query = searchParams.get('query') ?? '';
+  useEffect(() => {
+    if (query) {
+      console.log('effect');
+      console.log(query);
 
-  const query = searchParams.get('query');
+      getByQuery(query).then(setQueryArr);
+      setStatus('success');
+      setSearchQuery(query);
+    }
+  }, [query]);
+
+  const location = useLocation();
 
   const handleQueryChange = e => {
     setSearchQuery(e.currentTarget.value.toLowerCase());
@@ -25,17 +35,16 @@ const Movies = () => {
       setSearchQuery('');
       return;
     }
+    setSearchParams({ query: searchQuery });
     setStatus('pending');
-    setSearchParams({ qwery: searchQuery });
-    getByQuery(searchQuery).then(query => {
-      if (query.length === 0) {
+    getByQuery(searchQuery).then(data => {
+      if (data.length === 0) {
         setSearchParams({});
         setStatus('noInfo');
         return console.log('noInfo');
       }
-      setQueryArr(query);
+      setQueryArr(data);
       setStatus('success');
-      console.log(query);
     });
     setSearchQuery('');
   };
@@ -62,7 +71,7 @@ const Movies = () => {
         <ul>
           {queryArr.map(({ id, title, original_name }) => (
             <li key={id}>
-              <Link to={`/movies/${id}`} state={{ from: from }}>
+              <Link to={`/movies/${id}`} state={{ from: location }}>
                 {title || original_name}
               </Link>
             </li>

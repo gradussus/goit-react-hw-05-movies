@@ -2,6 +2,8 @@ import { getCast } from 'components/API/getCast';
 import { Loader } from 'components/Loader';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { CastList, Img, Card } from './Cast.styled';
+import placeholder from './placeholdeCast.jpg';
 
 const Cast = () => {
   const { movieID } = useParams();
@@ -21,26 +23,33 @@ const Cast = () => {
   }, [movieID]);
   return (
     <>
+      <hr></hr>
       {status === 'pending' && <Loader />}
       {status === 'success' && (
-        <ul>
+        <CastList>
           {cast.map(({ profile_path, name, character, id }) => (
-            <li key={id}>{name}</li>
+            <Card key={id}>
+              <Img
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/original${profile_path}`
+                    : placeholder
+                }
+                alt="character-photo"
+              />
+
+              <p>
+                <b> Name: {name} </b>{' '}
+              </p>
+              <p>
+                <u> Character: {character}</u>
+              </p>
+            </Card>
           ))}
-        </ul>
+        </CastList>
       )}
     </>
   );
 };
-
-// useEffect(() => {
-//   try {
-//         getCast().then(cast => setCast(cast)
-//       setStatus('success')
-//         )
-//   } catch(error) {
-//    console.log(error)
-//   }
-// }, []);
 
 export default Cast;

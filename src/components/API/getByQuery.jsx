@@ -2,7 +2,7 @@ import { KEY } from './KEY';
 import axios from 'axios';
 
 export const getByQuery = async query => {
-  console.log(query);
+  //   console.log(query);
   return (
     await axios
       .get(

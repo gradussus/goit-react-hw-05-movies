@@ -2,7 +2,15 @@ import { getByID } from 'components/API/getByID';
 import { Loader } from 'components/Loader';
 import { Suspense, useEffect } from 'react';
 import { useState } from 'react';
-import { Poster, Title } from './MovieDetails.styled';
+import {
+  Poster,
+  Title,
+  MovieCardLeft,
+  MovieCardRight,
+  Card,
+  Genre,
+  Back,
+} from './MovieDetails.styled';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 
 const { useParams } = require('react-router-dom');
@@ -33,31 +41,52 @@ const MovieDetails = () => {
   }, [movieID]);
 
   return (
-    <main>
-      <Link to={from}>Back</Link>
+    <>
       {status === 'pending' && <Loader />}
-      {status === 'error' && <div>Sorry, something wrong</div>}
+      {status === 'error' && (
+        <>
+          {' '}
+          <div>Sorry, something wrong</div>
+          <Back to={from}>Back</Back>
+        </>
+      )}
       {status === 'success' && (
         <>
-          <Poster
-            src={`https://image.tmdb.org/t/p/original/${currentMovie.poster_path}`}
-            alt="poster"
-          />
-          <Title>
-            {currentMovie.title +
-              ` (` +
-              currentMovie.release_date.slice(0, 4) +
-              `)`}
-          </Title>
-          <p>User score: {currentMovie.vote_average || 'No score'}</p>
-          <h2>Overview</h2>
-          <p>{currentMovie.overview || 'No overview'}</p>
-          <h3>Genres</h3>
-          <ul>
-            {currentMovie.genres.map(({ id, name }) => (
-              <li key={id}>{name}</li>
-            )) || 'No genres info'}
-          </ul>
+          <Card>
+            <MovieCardLeft>
+              <Back to={from}>
+                {
+                  <>
+                    <span>B</span>
+                    <span>A</span>
+                    <span>C</span>
+                    <span>K</span>
+                  </>
+                }
+              </Back>
+              <Poster
+                src={`https://image.tmdb.org/t/p/original/${currentMovie.poster_path}`}
+                alt="poster"
+              />
+            </MovieCardLeft>
+            <MovieCardRight>
+              <Title>
+                {currentMovie.title +
+                  ` (` +
+                  currentMovie.release_date.slice(0, 4) +
+                  `)`}
+              </Title>
+              <p>User score: {currentMovie.vote_average || 'No score'}</p>
+              <h2>Overview</h2>
+              <p>{currentMovie.overview || 'No overview'}</p>
+              <h3>Genres</h3>
+              <ul>
+                {currentMovie.genres.map(({ id, name }) => (
+                  <Genre key={id}> {name} </Genre>
+                )) || 'No genres info'}
+              </ul>
+            </MovieCardRight>
+          </Card>
           <hr></hr>
           <h4>Additional information</h4>
           <ul>
@@ -73,7 +102,7 @@ const MovieDetails = () => {
           </Suspense>
         </>
       )}
-    </main>
+    </>
   );
 };
 export default MovieDetails;
