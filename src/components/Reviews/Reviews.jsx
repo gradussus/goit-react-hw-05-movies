@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+
 import { getReviews } from 'components/API/getReviews';
 import { Loader } from 'components/Loader';
 

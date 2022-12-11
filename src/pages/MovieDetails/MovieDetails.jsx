@@ -1,7 +1,10 @@
-import { getByID } from 'components/API/getByID';
-import { Loader } from 'components/Loader';
 import { Suspense, useEffect } from 'react';
 import { useState } from 'react';
+import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
+
+import { getByID } from 'components/API/getByID';
+import { Loader } from 'components/Loader';
+
 import {
   Poster,
   Title,
@@ -11,9 +14,6 @@ import {
   Genre,
   Back,
 } from './MovieDetails.styled';
-import { Link, Outlet, useLocation } from 'react-router-dom';
-
-const { useParams } = require('react-router-dom');
 
 const MovieDetails = () => {
   const { movieID } = useParams();

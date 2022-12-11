@@ -1,7 +1,9 @@
-import { getCast } from 'components/API/getCast';
-import { Loader } from 'components/Loader';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+
+import { getCast } from 'components/API/getCast';
+import { Loader } from 'components/Loader';
+
 import { CastList, Img, Card } from './Cast.styled';
 import placeholder from './placeholdeCast.jpg';
 
